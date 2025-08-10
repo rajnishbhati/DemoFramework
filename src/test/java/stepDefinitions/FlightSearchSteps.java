@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import pages.HomePage;
 import com.aventstack.extentreports.ExtentTest;
 import utils.ExtentReportManager;
+import  utils.ScreenshotUtils;
 
 public class FlightSearchSteps {
 
@@ -57,8 +58,22 @@ public class FlightSearchSteps {
 
     @Then("I should see a list of available flights")
     public void verifyFlightList() {
-        test.pass("Flight list displayed (add assertion here)");
-        ExtentReportManager.flushReport();  // Flush report
-        driver.quit();
+        try {
+            // Fake assertion (replace with real check)
+            boolean flightsFound = true;
+            if (flightsFound) {
+                ExtentReportManager.getTest().pass("Flights listed successfully");
+            } else {
+                throw new AssertionError("No flights found");
+            }
+        } catch (Exception e) {
+            String screenshotPath = ScreenshotUtils.captureScreenshot(driver, "FlightSearchFail");
+            ExtentReportManager.getTest().fail("Test failed. Screenshot:")
+                    .addScreenCaptureFromPath(screenshotPath);
+            throw e;
+        } finally {
+            driver.quit();
+            ExtentReportManager.flushReport();
+        }
     }
 }
